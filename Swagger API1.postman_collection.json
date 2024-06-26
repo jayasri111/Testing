@@ -1,0 +1,694 @@
+{
+	"info": {
+		"_postman_id": "434fdc62-2ef5-49b9-9ff4-b447c69b2092",
+		"name": "Swagger API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30592326"
+	},
+	"item": [
+		{
+			"name": "Requires.in",
+			"item": [
+				{
+					"name": "Login Successfull",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.request.url.protocol = 'http';\r",
+									"tests[\"Status Code 201\"] = responseCode.code === 200 ;\r",
+									"console.log(\"code\",responseBody)\r",
+									"var jsondata = pm.response.json();\r",
+									"if (responseCode.code == 200){\r",
+									"    tests[\"Token  created: \"+  jsondata.token] = true;\r",
+									"}\r",
+									"else {\r",
+									"    tests[\"Token not  created\"]=false;\r",
+									"}\r",
+									"\r",
+									" "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random number for the email address\r",
+									"var randomNumber = Math.floor(Math.random() * 1000);\r",
+									"\r",
+									"// Set the email address in the environment variable\r",
+									"pm.environment.set(\"dynamic_email\", \"user\" + randomNumber + \"@example.com\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{requires}}/api/login",
+							"host": [
+								"{{requires}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "\n### Login API\n\nThis API endpoint is used to authenticate users and obtain a token for accessing protected resources. The HTTP POST request should be made to `https://reqres.in/api/login`.\n\n#### Request Body\n- `email` (string) - The email address of the user for authentication.\n- `password` (string) - The password of the user for authentication.\n\n#### Response\nUpon successful authentication, the API responds with a status code of 200 and a JSON object containing a `token` attribute, which can be used for accessing protected resources.\n\nExample:\n```json\n{\n    \"token\": \"your_access_token\"\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Successfull Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" \r",
+									"pm.globals.set(\"pavani\", \"10\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// tests[\"successfully record had been created\"] =responseCode.code === 200;\r",
+									"// pm.test(\"Response time is less than 200ms\", function () {\r",
+									"//     pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"// });\r",
+									"//  var jsondata = pm.response.json();\r",
+									"\r",
+									"// tests[\" token had been generated\"+\":\"+jsondata.token] =true;\r",
+									"\r",
+									"pm.request.url.protocol = 'http';\r",
+									"tests[\"Status Code 201\"] = responseCode.code === 200 ;\r",
+									"console.log(\"code\",responseBody)\r",
+									"var jsondata = pm.response.json();\r",
+									"if (responseCode.code == !200){\r",
+									"    tests[\"Token  created: \"+  jsondata.token] = true;\r",
+									"}\r",
+									"else {\r",
+									"    tests[\"Token not  created\"]=false;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{requires}}/api/login",
+							"host": [
+								"{{requires}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "\n### Login API\n\nThis API endpoint is used to authenticate users and obtain a token for accessing protected resources. The HTTP POST request should be made to `https://reqres.in/api/login`.\n\n#### Request Body\n- `email` (string) - The email address of the user for authentication.\n- `password` (string) - The password of the user for authentication.\n\n#### Response\nUpon successful authentication, the API responds with a status code of 200 and a JSON object containing a `token` attribute, which can be used for accessing protected resources.\n\nExample:\n```json\n{\n    \"token\": \"your_access_token\"\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Unsccessfull",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"The email had been missed\", function () {\r",
+									"    pm.expect(jsonData.error).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"viibrant@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/login",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register successfull",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"creation of record\"] =responseCode.code === 200;\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsondata = pm.response.json();\r",
+									"tests[\"Id\"+\":\"+jsondata.id] =true;\r",
+									"tests[\"token\"+\":\"+jsondata.token] =true;\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register unsccessefull",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random email address and set it as an environment variable\r",
+									"const randomEmail = `user_${Math.random().toString(36).substring(7)}@example.com`;\r",
+									"pm.environment.set('Email', randomEmail);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"creation of record\"] =responseCode.code === 200;\r",
+									" pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									" var jsondata = pm.response.json();\r",
+									"\r",
+									" tests[\"\"+jsondata.error ]=true;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create record",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random name\r",
+									"var names = [\"John\", \"Jane\", \"Bob\", \"Alice\", \"Charlie\", \"jaya\",\"sri\"];\r",
+									"var randomName = names[Math.floor(Math.random() * names.length)];\r",
+									"pm.globals.set(\"randomName\", randomName);\r",
+									"\r",
+									"var designation = [\"software\", \"Plumber\", \"Writer\", \"designer\", \"developer\", \"excutive\",\"Backendeveloper\"];\r",
+									"var job = designation[Math.floor(Math.random() * designation.length)];\r",
+									"pm.environment.set(\"job\", job);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"creation of record\"] =responseCode.code === 201;\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"var jsondata = pm.response.json();\r",
+									"tests[\"Name\"+\":\"+jsondata.name]=true;\r",
+									"tests[\"job\"+\":\"+jsondata.name]=true;\r",
+									"tests[\"id\"+\":\"+jsondata.id]=true;\r",
+									"tests[\"Created AT\"+\":\"+jsondata.createdAt]=true;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{randomName}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of record\"] =responseCode.code ==200;\r",
+									"pm.test(\"Response time is less than 100ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+									"});\r",
+									" var jsondata = pm.response.json();\r",
+									"\r",
+									" if(jsondata.data){\r",
+									" tests[\"id\"+\":\"+jsondata.data.id]=true;\r",
+									"tests[\"email\"+\":\"+jsondata.data.email]=true;\r",
+									"tests[\"first_name\"+\":\"+jsondata.data.first_name]=true;\r",
+									"tests[\"last_name\"+\":\"+jsondata.data.last_name]=true;\r",
+									"tests[\"avatar\"+\":\"+jsondata.data.avatar]=true;\r",
+									"tests[\"avatar\"+\":\"+jsondata.support.url]=true;\r",
+									"tests[\"avatar\"+\":\"+jsondata.support.text]=true;\r",
+									" }\r",
+									" else{\r",
+									"    tests[\"It is not having any data\"] =true;\r",
+									" }\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"random_number\", _.random(1, 10))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users/{{random_number}}",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{random_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"creation of record\"] =responseCode.code === 200;\r",
+									"var jsondata =pm.response.json();\r",
+									"tests[\"page\"+\":\"+jsondata.page]=true;\r",
+									"tests[\"per_page\"+\":\"+jsondata.per_page]=true;\r",
+									"tests[\"total\"+\":\"+jsondata.total]=true;\r",
+									"tests[\"total_pages\"+\":\"+jsondata.total_pages]=true;\r",
+									"\r",
+									"if (jsondata.data && jsondata.data.length > 0) {\r",
+									"    for (let i = 0; i < jsondata.data.length; i++) {\r",
+									"        const currentItem = jsondata.data[i];\r",
+									"        // General details\r",
+									"        tests[\"id \" + (i + 1) + \":\" +currentItem.id] = true;\r",
+									"        tests[\"email\" + (i + 1) + \":\" +currentItem.email] = true;\r",
+									"        tests[\"first_name \" + (i + 1) + \":\" +currentItem.first_name] = true;\r",
+									"        tests[\"last_name \" + (i + 1) + \":\" +currentItem.last_name] = true;\r",
+									"        tests[\"avatar\" + (i + 1) + \":\" +currentItem.avatar] = true;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users?page=2;",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2;"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"creation of record\"]=responseCode.code === 200;\r",
+									"\r",
+									"var jsondata= pm.response.json();\r",
+									"\r",
+									"tests[\"page\"+\":\"+jsondata.page]=true;\r",
+									"tests[\"per_page\"+\":\"+jsondata.per_page]=true;\r",
+									"tests[\"total\"+\":\"+jsondata.total]=true;\r",
+									"tests[\"total_pages\"+\":\"+jsondata.total_pages]=true;\r",
+									"\r",
+									"if (jsondata.data && jsondata.data.length > 0) {\r",
+									"    for (let i = 0; i < jsondata.data.length; i++) {\r",
+									"        const currentItem = jsondata.data[i];\r",
+									"        // General details\r",
+									"        tests[\"id \" + (i + 1) + \":\" +currentItem.id] = true;\r",
+									"        tests[\"name\" + (i + 1) + \":\" +currentItem.name] = true;\r",
+									"        tests[\"year\" + (i + 1) + \":\" +currentItem.year] = true;\r",
+									"        tests[\"color \" + (i + 1) + \":\" +currentItem.color] = true;\r",
+									"        tests[\"pantone_value\" + (i + 1) + \":\" +currentItem.pantone_value] = true;\r",
+									"   \r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/unknown",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"unknown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single users not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Not created Record\"]=responseCode.code === 404;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users/23",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creatio of record\"] =responseCode.code === 200;\r",
+									"var jsondata= pm.response.json();\r",
+									"\r",
+									"tests[\"Name\"+\":\"+jsondata.name] =true;\r",
+									"tests[\"job\"+\":\"+jsondata.job] =true;\r",
+									"tests[\"updatedAt\"+\":\"+jsondata.updatedAt] =true;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{randomName}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users/[{{random_number}}",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"[{{random_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYW50aGV0aW1hbmFzYTEyM0BnbWFpbC5jb20iLCJleHAiOjE3MTk0MTUwNjIsImlhdCI6MTcxOTM3OTA2Mn0.Sppi-USLCC3ERZgzgX35BipRMhVfU9qb-PYG-p-uBd0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "resume",
+									"type": "file",
+									"src": "/C:/Users/jayasri/Downloads/Selenium-with-Java-Magnitia-Content.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "g23jza8mtp.ap-south-1.awsapprunner.com/applicant-pdf/1/upload",
+							"host": [
+								"g23jza8mtp",
+								"ap-south-1",
+								"awsapprunner",
+								"com"
+							],
+							"path": [
+								"applicant-pdf",
+								"1",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "value",
+			"value": "10",
+			"type": "string"
+		}
+	]
+}
