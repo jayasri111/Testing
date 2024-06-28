@@ -1,0 +1,448 @@
+{
+	"info": {
+		"_postman_id": "948666b1-1f5c-4614-9bb7-b6e02cdb05af",
+		"name": "4.Gallery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30592326"
+	},
+	"item": [
+		{
+			"name": "post Album",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"creation of record\"]=responseCode.code === 201;\r",
+							"var jsonData = pm.response.json();\r",
+							"// pm.environment.set(\"id\", jsonData.data.id);\r",
+							"if(jsonData.status){\r",
+							"     tests[\"type\" +jsonData.status.type] = true;\r",
+							"     tests[\"message\" +\":\" +jsonData.status.message] = true;\r",
+							"}\r",
+							"if(jsonData.data)\r",
+							"{\r",
+							"    tests[\"id\"+\":\"+jsonData.data.id] = true;\r",
+							"     tests[\"name\"+\":\"+jsonData.data.name] = true;\r",
+							"      tests[\"status\"+\":\"+jsonData.data.status] = true;     \r",
+							"}\r",
+							"if(jsonData.data.gallery_id)\r",
+							"{\r",
+							"    tests[\"id\"+\":\"+jsonData.data.gallery_id.id] = true;\r",
+							"     tests[\"name\"+\":\"+jsonData.data.gallery_id.name] = true;\r",
+							"     tests[\"description\"+\":\"+jsonData.data.gallery_id.description] = true;\r",
+							"     tests[\"status\"+\":\"+jsonData.data.gallery_id.status] = true  \r",
+							"}\r",
+							"var galleryid = jsonData.data.id;\r",
+							"pm.environment.set(\"galleryid\", galleryid);\r",
+							" \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Beraer Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\":\"{{Firstname}}\",\r\n  \"description\": \"New Description\",\r\n  \"status\": \"Active\",\r\n  \"image\": \"image\",\r\n  \"gallery_id\": \"31\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/photo/album",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"photo",
+						"album"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Album",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Getting All the records\"]=pm.response.code === 200;\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData);\r",
+							"\r",
+							"if(jsonData.status){\r",
+							"     tests[\"type\" +jsonData.status.type] = true;\r",
+							"     tests[\"message\" +\":\" +jsonData.status.message] = true;\r",
+							"     tests[\"total\" +\":\" +jsonData.status.total] = true;\r",
+							"     tests[\"per_page\" +\":\" +jsonData.status.per_page] = true;\r",
+							"     tests[\"current_page\" +\":\" +jsonData.status.current_page] = true;\r",
+							"}\r",
+							"\r",
+							"if(jsonData.data && jsonData.data.length > 0 ){\r",
+							"       for(let i=0; i < jsonData.data.length; i++){\r",
+							"           const currentItem = jsonData.data[i];\r",
+							"           tests[\"id \" + (i + 1) + \":\" +currentItem.id] =true;\r",
+							"           tests[\"name\" + (i + 1) + \":\" +currentItem.name] =true;\r",
+							"           tests[\"status \" + (i + 1) + \":\" +currentItem.status] = true;\r",
+							"\r",
+							"           if(currentItem.gallery_id ){\r",
+							"              tests[\" ID \" + \": \" + currentItem.gallery_id.id] = true;\r",
+							"              tests[\"name \"  + \": \" +  currentItem.gallery_id.name] = true;\r",
+							"              tests[\"status \"  + \": \" +  currentItem.gallery_id.status] = true;\r",
+							"           }\r",
+							"       }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Login Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/photo/album/1/10",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"photo",
+						"album",
+						"1",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"tests[\"Getting only one record\"] = pm.response.code === 200;\r",
+							"\r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type\" + \":\" + jsonData.status.type] = true;\r",
+							"    tests[\"message\" + \":\" + jsonData.status.message] = true;\r",
+							"}\r",
+							"\r",
+							"if (jsonData.data) {\r",
+							"    tests[\"id \" + \": \" + jsonData.data.id] = true;\r",
+							"    tests[\"name\" + \":\" + jsonData.data.name] = true;\r",
+							"    tests[\"description\" + \":\" + jsonData.data.description] = true;\r",
+							"    tests[\"image\" + \":\" + jsonData.data.image] = true;\r",
+							"    tests[\"status\" + \":\" + jsonData.data.status] = true;\r",
+							"\r",
+							"    if (jsonData.data.gallery_id) {\r",
+							"        tests[\"id\" + \":\" + jsonData.data.gallery_id.id] = true;\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Login Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/photo/album/{{galleryid}}",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"photo",
+						"album",
+						"{{galleryid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Album status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Updating the status\"] = responseCode.code  === 200;\r",
+							"\r",
+							"var jsondata = pm.response.json();\r",
+							"\r",
+							"if(jsondata.status)\r",
+							"{\r",
+							"    tests[\"type\"+ \":\"+jsondata.status.type] = true ;\r",
+							"     tests[\"type\"+ \":\"+jsondata.status.message] = true ;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Login Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": \"Inactive\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/photo/album/updateactive/{{galleryid}}",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"photo",
+						"album",
+						"updateactive",
+						"{{galleryid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updating album",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Data updated\"] = responseCode.code === 400;\r",
+							"\r",
+							"var jsondata = pm.response.json();\r",
+							"\r",
+							"if(jsondata.status)\r",
+							"{\r",
+							"    tests[\"type\" + \":\"+ jsondata.status.type] = true;\r",
+							"    tests[\"message\"+ \":\"+jsondata.status.message] = true;\r",
+							"}\r",
+							"if(jsondata.data)\r",
+							"{\r",
+							"    tests[\"type\" + \":\"+ jsondata.data.id] = true;\r",
+							"    tests[\"type\" + \":\"+ jsondata.data.name] = true;\r",
+							"    tests[\"type\" + \":\"+ jsondata.data.description] = true;\r",
+							"    tests[\"type\" + \":\"+ jsondata.data.status] = true;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Login Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"jaya\",\r\n  \"description\": \"description\",\r\n  \"status\": \"active\",\r\n  \"image\": \"image\",\r\n  \"gallery_id\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/photo/album/update/{{galleryid}}}",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"photo",
+						"album",
+						"update",
+						"{{galleryid}}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Record deleted\"] = responseCode.code === 200;\r",
+							" var jsondata = pm. response.json();\r",
+							"\r",
+							" if(jsondata.status)\r",
+							" {\r",
+							"     tests[\"type\"+\":\"+jsondata.status.type] = true;\r",
+							"     tests[\"message\"+\":\"+jsondata.status.message] = true;\r",
+							" }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Beraer Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ids\": [\r\n    166\r\n    \r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/photo/album/delete",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"photo",
+						"album",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
