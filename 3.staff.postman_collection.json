@@ -1,0 +1,1014 @@
+{
+	"info": {
+		"_postman_id": "6d56c75e-8aaa-444e-8cb8-3c7f66bee0a5",
+		"name": "3.staff",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30592326"
+	},
+	"item": [
+		{
+			"name": "Successful Record Creation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// // Verify that the HTTP response code indicates a successful creation of a record  \r",
+							"tests[\"creation of record\"] =responseCode.code === 400;\r",
+							"// // Parse the response body as JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"jaya\",jsonData);\r",
+							"// // Check if the 'status' property exists in the JSON data\r",
+							"// if (jsonData.status) {\r",
+							"//     // If 'status' exists, set tests for type and message-\r",
+							"//     tests[\"type: \" + jsonData.status.type] = true;  \r",
+							"//     tests[\"message: \" + jsonData.status.message] = true;\r",
+							"// }\r",
+							"// // Check if the 'data' property exists in the JSON data\r",
+							"// if (jsonData.data) {\r",
+							"//     // If 'data' exists, set tests for id and email\r",
+							"//     tests[\"id: \" + jsonData.data.id] = true;\r",
+							"//     tests[\"firstname: \" + jsonData.data.first_name] = true;\r",
+							"//     tests[\"email: \" + jsonData.data.email] = true;\r",
+							"//     // Check if 'department' exists and is an array with elements\r",
+							"//     if (jsonData.data.department && jsonData.data.department.length > 0) {\r",
+							"//         // Loop through each element in the 'department' array\r",
+							"//         for (let i = 0; i < jsonData.data.department.length; i++) {\r",
+							"//             const currentItem = jsonData.data.department[i];\r",
+							"//             // Set tests for department id and name for each element\r",
+							"//             tests[\"department id \" + (i + 1) + \":\"+  currentItem.id] = true;\r",
+							"//             tests[\"department name \" + (i + 1) + \": \" + currentItem.name] = true;\r",
+							"//             if(currentItem.pivot) {\r",
+							"//                 tests[\"staffId\"+\":\"+currentItem.pivot.staff_id] = true;\r",
+							"//             }\r",
+							"//         }\r",
+							"//     }\r",
+							"// }\r",
+							"// // // Extract the ID\r",
+							"// // var staffId =  jsonData.data.id;\r",
+							"// // // Set the variable with the staff ID\r",
+							"// // pm.environment.set(\"staff\", staffId);\r",
+							"// // // get the variable with the staff\r",
+							"// // var staffdata =pm.environment.get(\"staff\");\r",
+							"// // console.log(\"staff\", staffdata);\r",
+							"\r",
+							"\r",
+							" "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// // Generate a random email address and set it as an environment variable\r",
+							"// const randomEmail = `user_${Math.random().toString(36).substring(7)}@example.com`;\r",
+							"// pm.environment.set('Email', randomEmail);\r",
+							"\r",
+							"// // Generate a random name\r",
+							"// var names = [\"John\", \"Jane\", \"Bob\", \"Alice\", \"Charlie\", \"jaya\",\"sri\"];\r",
+							"// var randomName = names[Math.floor(Math.random() * names.length)];\r",
+							"// pm.environment.set(\"Firstname\", randomName);\r",
+							" \r",
+							"\r",
+							"// var lastNames = [\"Doe\", \"Smith\", \"Johnson\", \"Williams\", \"Brown\"];\r",
+							"// var randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+							"// pm.environment.set(\"Lastname\", randomLastName);\r",
+							" \r",
+							"// //  Generate a random 10-digit phone number\r",
+							"// // var randomPhoneNumber = Math.floor(Math.random() * 7000000000) + 3000000;\r",
+							"\r",
+							"// //  Set the variable with the random phone number\r",
+							"// // pm.environment.set(\"PhoneNumber\", randomPhoneNumber);\r",
+							"// // Generate a random 9-digit suffix\r",
+							"// var randomSuffix = Math.floor(Math.random() * 700000000);\r",
+							"\r",
+							"// // Ensure the phone number has exactly 10 digits by adding a fixed digit at the beginning\r",
+							"// var phoneNumber = \"8\" + randomSuffix;\r",
+							"\r",
+							"// // Set the variable with the constructed phone number\r",
+							"// pm.environment.set(\"PhoneNumber\", phoneNumber);\r",
+							"\r",
+							"\r",
+							"// // Set the variable with the number\r",
+							"// pm.environment.set(\"staff_title_id\",_.random(1, 5))\r",
+							"// // let url= pm.variables.get(\"devURL\");\r",
+							"// // console.log(url);\r",
+							"  "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\r\n//   \"first_name\": \"{{Firstname}}\",\r\n//   \"last_name\": \"{{Lasstname}}\",\r\n//   \"email\": \"{{Email}}\",\r\n//   \"phone_number\": \"{{PhoneNumber}}\",\r\n//   \"extension\": \"{{PhoneNumber}}\",\r\n//   \"status\": 1,\r\n//   \"department\": [\r\n//       1,\r\n//       2 \r\n//   ],\r\n//   \"staff_title_id\": \"{{staff_title_id}}\",\r\n//   \"show_manager\": 1,\r\n//   \"profile_pic\": \"profile_pic\"\r\n// }\r\n\r\n{\r\n    \"first_name\": \"Jayasri\",\r\n    \"last_name\": \"Naga\",\r\n    \"email\": \"{{email}}\",\r\n    \"phone_number\": \"3365455419\",\r\n    \"status\": true,\r\n    \"extension\": \"3453454657567\",\r\n    \"department\": [\r\n        377\r\n    ],\r\n    \"staff_title_id\": \"2\",\r\n    \"show_manager\": \"1\",\r\n    \"biography\": \"\",\r\n    \"profile_pic\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://dev-backend.viibrant.com/api/v1/staff"
+			},
+			"response": []
+		},
+		{
+			"name": "Duplicate Email Check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed the syntax error by removing semicolon after if condition\r",
+							"tests[\"Status Code Check--Creation 200\"] = responseCode.code === 200 ;\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"if(jsonData.Status === \"OK\" && jsonData.code === 200)\r",
+							"{\r",
+							"   tests[\"message \" + \"= \" +jsonData.status.message]=true;\r",
+							"}\r",
+							"else\r",
+							"{\r",
+							"   tests[\"Correct email is not found\"]=true;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"first_name\",\r\n  \"last_name\": \"last_name\",\r\n  \"email\": \"{{email}}\",\r\n  \"biography\": \"biography\",\r\n  \"phone_number\": \"\",\r\n  \"extension\": \"extension\",\r\n  \"status\": 1,\r\n  \"department\": [\r\n    1,\r\n    2\r\n  ],\r\n  \"staff_title_id\": \"\",\r\n  \"show_manager\": 1,\r\n  \"profile_pic\": \"profile_pic\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://dev-backend.viibrant.com/api/v1/staff"
+			},
+			"response": []
+		},
+		{
+			"name": "Missing Required Field (Email)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code Check--Creation 200\"] = responseCode.code === 201;\r",
+							" \r",
+							"var jsonData = pm.response.json();\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data) {\r",
+							"    tests[\"id: \" + jsonData.data.id] = true;\r",
+							"    tests[\"email: \" + jsonData.data.email] = true;\r",
+							"    \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"first_name\",\r\n  \"last_name\": \"last_name\",\r\n  \"email\": \"\",\r\n  \"biography\": \"biography\",\r\n  \"phone_number\": \"\",\r\n  \"extension\": \"extension\",\r\n  \"status\": 1,\r\n  \"department\": [\r\n 1\r\n  ],\r\n  \"staff_title_id\": \"\",\r\n  \"show_manager\": 1,\r\n  \"profile_pic\": \"profile_pic\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://dev-backend.viibrant.com/api/v1/staff"
+			},
+			"response": []
+		},
+		{
+			"name": "staff all records",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code Check 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(\"jaysri\",jsonData);\r",
+							"\r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"}\r",
+							"\r",
+							"if (jsonData.data && jsonData.data.length > 0) {\r",
+							"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+							"        const currentItem = jsonData.data[i];\r",
+							"        // General details\r",
+							"        tests[\"id \" + (i + 1) + \":\" +currentItem.id] = true;\r",
+							"        // Department details\r",
+							"        if (currentItem.department && currentItem.department.length > 0) {\r",
+							"            for (let j = 0; j < currentItem.department.length; j++) {\r",
+							"                const currentDepartment = currentItem.department[j];\r",
+							"                tests[\"Department ID \" + (j + 1) + \": \" + currentDepartment.id] = true;\r",
+							"                tests[\"Trash \" + (j + 1) + \": \" + currentDepartment.Trash] = true;\r",
+							"\r",
+							"                    if (currentDepartment.pivot) {\r",
+							"                    tests[\"(Pivot - Staff ID) \" + (j + 1) + \": \" + currentDepartment.pivot.staff_id] = true;\r",
+							"                    tests[\"(Pivot - Department ID) \" + (j + 1) + \": \" + currentDepartment.pivot.department_id] = true;\r",
+							"                      \r",
+							"                      if(currentItem.staff_title)\r",
+							"                      {\r",
+							"                        tests[\"staff title id\"+\":\" + currentItem.staff_title.id] = true;\r",
+							"                      }\r",
+							"                }\r",
+							"                \r",
+							"            }\r",
+							"        } \r",
+							"    }\r",
+							"     \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/staff/1/100/?status={{status}}",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"staff",
+						"1",
+						"100",
+						""
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "{{status}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "staff inactive status records",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"tests[\"Status Code Check--Creation 200\"] = responseCode.code === 200;\r",
+							" \r",
+							"var jsonData = pm.response.json();\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data && jsonData.data.length > 0) {\r",
+							"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+							"        const currentItem = jsonData.data[i];\r",
+							" \r",
+							"        // General details\r",
+							"        tests[\"id \" + (i + 1) + \": \" + currentItem.id] = true;\r",
+							"            tests[\"status \" + (i + 1) + \": \" + currentItem.status] = true;\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/staff/1/10/?Keyword=%20&status=0",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"staff",
+						"1",
+						"10",
+						""
+					],
+					"query": [
+						{
+							"key": "Keyword",
+							"value": "%20"
+						},
+						{
+							"key": "status",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "staff active status records",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" \r",
+							"pm.request.url.protocol = 'http';\r",
+							"tests[\"Status Code Check--Creation 200\"] = responseCode.code === 200;\r",
+							" \r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data && jsonData.data.length > 0) {\r",
+							"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+							"        const currentItem = jsonData.data[i];\r",
+							" \r",
+							"        // General details\r",
+							"        tests[\"id \" + (i + 1) + \": \" + currentItem.id] = true;\r",
+							"            tests[\"status \" + (i + 1) + \": \" + currentItem.status] = true;\r",
+							"    }\r",
+							"}\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/staff/1/10/?Keyword=%20&status=1",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"staff",
+						"1",
+						"10",
+						""
+					],
+					"query": [
+						{
+							"key": "Keyword",
+							"value": "%20"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search with invalid keyword staff",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" \r",
+							"pm.request.url.protocol = 'http';\r",
+							"tests[\"Status Code Check--Creation 200\"] = responseCode.code === 200;\r",
+							" \r",
+							"var jsonData = pm.response.json();\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data && jsonData.data.length > 0) {\r",
+							"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+							"        const currentItem = jsonData.data[i];\r",
+							" \r",
+							"        // General details\r",
+							"        tests[\"id \" + (i + 1) + \": \" + currentItem.id] = true;\r",
+							"          tests[\"first_name \" + (i + 1) + \": \" + currentItem.first_name] = true;\r",
+							"            tests[\"status \" + (i + 1) + \": \" + currentItem.status] = true;\r",
+							"    }\r",
+							"}\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/staff/1/10/?Keyword=Danny&status=1",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"staff",
+						"1",
+						"10",
+						""
+					],
+					"query": [
+						{
+							"key": "Keyword",
+							"value": "Danny"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search with valid keyword staff",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code Check--Creation 200\"] = responseCode.code === 200;\r",
+							" \r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"samp\",jsonData);\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"error: \" + jsonData.status.error] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"    tests[\"execution_time: \" + jsonData.status.execution_time] = true;\r",
+							"    tests[\"current_page: \" + jsonData.status.current_page] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data && jsonData.data.length > 0) {\r",
+							"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+							"        const currentItem = jsonData.data[i];\r",
+							" \r",
+							"        // General details\r",
+							"        tests[\"id \"  + \": \" + currentItem.id] = true;\r",
+							"        tests[\"first_name \"  + \": \" + currentItem.first_name] = true;\r",
+							"        tests[\"last_name \"  + \": \" + currentItem.last_name] = true;\r",
+							"        tests[\"email \"  + \": \" + currentItem.email] = true;\r",
+							"        tests[\"phone_number \" + \": \" + currentItem.phone_number] = true;\r",
+							"        tests[\"profile_pic \"  + \": \" + currentItem.profile_pic] = true;\r",
+							" \r",
+							"        // Department details\r",
+							"        if (currentItem.department && currentItem.department.length > 0) {\r",
+							"            for (let j = 0; j < currentItem.department.length; j++) {\r",
+							"                const currentDepartment = currentItem.department[j];\r",
+							"                tests[\"Department ID \"  + \": \" + currentDepartment.id] = true;\r",
+							"                tests[\"Department name \"  + \": \" + currentDepartment.name] = true;\r",
+							"                tests[\"Department parent_id \" + \": \" + currentDepartment.parent_id] = true;\r",
+							"                tests[\"Department status \"  + \": \" + currentDepartment.status] = true;\r",
+							"                tests[\"Department Trash \"  + \": \" + currentDepartment.Trash] = true;\r",
+							"                tests[\"Department created_at \"  + \": \" + currentDepartment.created_at] = true;\r",
+							"                tests[\"Department updated_at \" + \": \" + currentDepartment.updated_at] = true;\r",
+							"                tests[\"Department tenant_id \"  + \": \" + currentDepartment.tenant_id] = true;\r",
+							"                tests[\"Department source_id \"  + \": \" + currentDepartment.source_id] = true;\r",
+							"                // Pivot details\r",
+							"                if (currentDepartment.pivot) {\r",
+							"                    tests[\"Pivot - Staff ID \"  + \": \" + currentDepartment.pivot.staff_id] = true;\r",
+							"                    tests[\"Pivot - Department ID \" + \": \" + currentDepartment.pivot.department_id] = true;\r",
+							"                }\r",
+							"            }\r",
+							"            if (currentItem.staff_title) {\r",
+							"                 tests[\"staff_title -ID \"  + \": \" + currentItem.staff_title.id] = true;\r",
+							"                 tests[\"staff_title -title \"  + \": \" + currentItem.staff_title.title] = true;\r",
+							"                 tests[\"staff_title -status \"  + \": \" + currentItem.staff_title.status] = true;\r",
+							"                 tests[\"staff_title -tenant_id \"  + \": \" + currentItem.staff_title.tenant_id] = true;\r",
+							"                 tests[\"staff_title -created_at \"  + \": \" + currentItem.staff_title.created_at] = true;\r",
+							"                 tests[\"staff_title -updated_at \"  + \": \" + currentItem.staff_title.updated_at] = true;\r",
+							"                 tests[\"staff_title -source_id \"  + \": \" + currentItem.staff_title.source_id] = true;\r",
+							"        } \r",
+							"        }\r",
+							"        // Tenant details\r",
+							"        if (currentItem.tenant) {\r",
+							"            tests[\"Tenant ID \"  + \": \" + currentItem.tenant.id] = true;\r",
+							"            tests[\"Tenant Name \"  + \": \" + currentItem.tenant.name] = true;\r",
+							"            tests[\"Tenant Domain \"  + \": \" + currentItem.tenant.domain] = true;\r",
+							"            tests[\"Tenant key \"  + \": \" + currentItem.tenant.key] = true;\r",
+							"            tests[\"Tenant status \" + \": \" + currentItem.tenant.status] = true;\r",
+							"            tests[\"Tenant weather_key \" + \": \" + currentItem.tenant.weather_key] = true;\r",
+							"            tests[\"Tenant created_at \"  + \": \" + currentItem.tenant.created_at] = true;\r",
+							"            tests[\"Tenant updated_at \" + \": \" + currentItem.tenant.updated_at] = true;\r",
+							"        } \r",
+							"        \r",
+							"    }\r",
+							"}\r",
+							" tests[\"Status Code Check--Creation 200\"] = responseCode.code === 200;\r",
+							" \r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"console.log(\"samp\",jsonData);\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"error: \" + jsonData.status.error] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"    tests[\"execution_time: \" + jsonData.status.execution_time] = true;\r",
+							"    tests[\"current_page: \" + jsonData.status.current_page] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data && jsonData.data.length > 0) {\r",
+							"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+							"        const currentItem = jsonData.data[i];\r",
+							" \r",
+							"        // General details\r",
+							"        tests[\"id \"  + \": \" + currentItem.id] = true;\r",
+							"        tests[\"first_name \"  + \": \" + currentItem.first_name] = true;\r",
+							"        tests[\"last_name \"  + \": \" + currentItem.last_name] = true;\r",
+							"        tests[\"email \"  + \": \" + currentItem.email] = true;\r",
+							"        tests[\"phone_number \" + \": \" + currentItem.phone_number] = true;\r",
+							"        tests[\"profile_pic \"  + \": \" + currentItem.profile_pic] = true;\r",
+							" \r",
+							"        // Department details\r",
+							"        if (currentItem.department && currentItem.department.length > 0) {\r",
+							"            for (let j = 0; j < currentItem.department.length; j++) {\r",
+							"                const currentDepartment = currentItem.department[j];\r",
+							"                tests[\"Department ID \"  + \": \" + currentDepartment.id] = true;\r",
+							"                tests[\"Department name \"  + \": \" + currentDepartment.name] = true;\r",
+							"                tests[\"Department parent_id \" + \": \" + currentDepartment.parent_id] = true;\r",
+							"                tests[\"Department status \"  + \": \" + currentDepartment.status] = true;\r",
+							"                tests[\"Department Trash \"  + \": \" + currentDepartment.Trash] = true;\r",
+							"                tests[\"Department created_at \"  + \": \" + currentDepartment.created_at] = true;\r",
+							"                tests[\"Department updated_at \" + \": \" + currentDepartment.updated_at] = true;\r",
+							"                tests[\"Department tenant_id \"  + \": \" + currentDepartment.tenant_id] = true;\r",
+							"                tests[\"Department source_id \"  + \": \" + currentDepartment.source_id] = true;\r",
+							"                // Pivot details\r",
+							"                if (currentDepartment.pivot) {\r",
+							"                    tests[\"Pivot - Staff ID \"  + \": \" + currentDepartment.pivot.staff_id] = true;\r",
+							"                    tests[\"Pivot - Department ID \" + \": \" + currentDepartment.pivot.department_id] = true;\r",
+							"                }\r",
+							"            }\r",
+							"            if (currentItem.staff_title) {\r",
+							"                 tests[\"staff_title -ID \"  + \": \" + currentItem.staff_title.id] = true;\r",
+							"                 tests[\"staff_title -title \"  + \": \" + currentItem.staff_title.title] = true;\r",
+							"                 tests[\"staff_title -status \"  + \": \" + currentItem.staff_title.status] = true;\r",
+							"                 tests[\"staff_title -tenant_id \"  + \": \" + currentItem.staff_title.tenant_id] = true;\r",
+							"                 tests[\"staff_title -created_at \"  + \": \" + currentItem.staff_title.created_at] = true;\r",
+							"                 tests[\"staff_title -updated_at \"  + \": \" + currentItem.staff_title.updated_at] = true;\r",
+							"                 tests[\"staff_title -source_id \"  + \": \" + currentItem.staff_title.source_id] = true;\r",
+							"        } \r",
+							"        }\r",
+							"        // Tenant details\r",
+							"        if (currentItem.tenant) {\r",
+							"            tests[\"Tenant ID \"  + \": \" + currentItem.tenant.id] = true;\r",
+							"            tests[\"Tenant Name \"  + \": \" + currentItem.tenant.name] = true;\r",
+							"            tests[\"Tenant Domain \"  + \": \" + currentItem.tenant.domain] = true;\r",
+							"            tests[\"Tenant key \"  + \": \" + currentItem.tenant.key] = true;\r",
+							"            tests[\"Tenant status \" + \": \" + currentItem.tenant.status] = true;\r",
+							"            tests[\"Tenant weather_key \" + \": \" + currentItem.tenant.weather_key] = true;\r",
+							"            tests[\"Tenant created_at \"  + \": \" + currentItem.tenant.created_at] = true;\r",
+							"            tests[\"Tenant updated_at \" + \": \" + currentItem.tenant.updated_at] = true;\r",
+							"        } \r",
+							"        \r",
+							"    }\r",
+							"}\r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dev-backend.viibrant.com/api/v1/staff/1/10/?Keyword=sample&status=1",
+					"protocol": "http",
+					"host": [
+						"dev-backend",
+						"viibrant",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"staff",
+						"1",
+						"10",
+						""
+					],
+					"query": [
+						{
+							"key": "Keyword",
+							"value": "sample"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single staff record with valid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"// pm.environment.get(\"staff\", staffId);\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"samp\", jsonData);\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"    tests[\"execution_time: \" + jsonData.status.execution_time] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data) {\r",
+							"    // General details\r",
+							"    tests[\"id \" + \": \" + jsonData.data.id] = true;\r",
+							"     tests[\"status \" + \": \" + jsonData.data.status] = true;\r",
+							"    tests[\"profile_pic \" + \": \" + jsonData.data.profile_pic] = true;\r",
+							" \r",
+							"    \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{devURL}}/api/v1/staff/{{staff}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Single staff record with invalid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							" var jsonData =pm.response.json();\r",
+							" if(jsonData.status)\r",
+							" {\r",
+							"     tests[\"type\"+\":\"+jsonData.status.type] = true;\r",
+							"      tests[\"message\"+\":\"+jsonData.status.message] = true;\r",
+							" }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://dev-backend.viibrant.com/api/v1/staff/71"
+			},
+			"response": []
+		},
+		{
+			"name": "updating staff records",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" \r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							" \r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"}\r",
+							" \r",
+							"if (jsonData.data) {\r",
+							"    tests[\"id: \" + jsonData.data.id] = true;\r",
+							"    tests[\"email: \" + jsonData.data.email] = true;\r",
+							"    if (jsonData.data.department && jsonData.data.department.length > 0) {\r",
+							"        \r",
+							"         for (let i = 0; i < jsonData.data.department.length; i++) {\r",
+							"            tests[\"department id \" + (i + 1) + \": \" + jsonData.data.department[i].id] = true;\r",
+							"            tests[\"department name \" + (i + 1) + \": \" + jsonData.data.department[i].name] = true;\r",
+							"        }\r",
+							" \r",
+							"     }\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\":\"jaya\",\r\n    \"last_name\":\"names\",\r\n    \"email\":\"{{email}}\"\r\n   \r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://dev-backend.viibrant.com/api/v1/staff/{{staff}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Record deleted\"] =responseCode.code === 200;\r",
+							"\r",
+							"var jsondata = pm.response.json();\r",
+							"\r",
+							"if(jsondata.status){\r",
+							"    tests[\"type\"+\":\"+jsondata.status.type] =true;\r",
+							"    tests[\"message\"+\":\"+jsondata.status.message] =true;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ids\": [\r\n\r\n    \r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://dev-backend.viibrant.com/api/v1/staff/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Departments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Getting All the records\"]=pm.response.code === 200;\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"if(jsonData.status){\r",
+							"     tests[\"type\" +jsonData.status.type] = true;\r",
+							"     tests[\"message\" +\":\" +jsonData.status.message] = true;\r",
+							"     tests[\"total\" +\":\" +jsonData.status.total] = true;\r",
+							"     tests[\"per_page\" +\":\" +jsonData.status.per_page] = true;\r",
+							"     tests[\"current_page\" +\":\" +jsonData.status.current_page] = true;\r",
+							"}\r",
+							"\r",
+							"if(jsonData.data && jsonData.data.length > 0 ){\r",
+							"       for(let i=0; i < jsonData.data.length; i++){\r",
+							"           const currentItem = jsonData.data[i];\r",
+							"           tests[\"id \" + (i + 1) + \":\" +currentItem.id] =true;\r",
+							"           tests[\"name\" + (i + 1) + \":\" +currentItem.name] =true;\r",
+							"           tests[\"status \" + (i + 1) + \":\" +currentItem.status] = true;\r",
+							"       }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://dev-backend.viibrant.com/api/v1/department/1/-1/"
+			},
+			"response": []
+		},
+		{
+			"name": "Department Search with Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code Check 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(\"jaysri\",jsonData);\r",
+							"\r",
+							"if (jsonData.status) {\r",
+							"    tests[\"type: \" + jsonData.status.type] = true;\r",
+							"    tests[\"message: \" + jsonData.status.message] = true;\r",
+							"}\r",
+							"\r",
+							"if (jsonData.data.staffs && jsonData.data.staffs.length > 0) {\r",
+							"    for (let i = 0; i < jsonData.data.staffs.length; i++) {\r",
+							"        const currentItem = jsonData.data.staffs[i];\r",
+							"\r",
+							"        // General details\r",
+							"        tests[\"id \" + (i + 1) + \":\" +currentItem.id] = true;\r",
+							"       tests[\"first_name \" + (i + 1) + \":\" +currentItem.first_name] = true;\r",
+							"       tests[\"last_name \" + (i + 1) + \":\" +currentItem.last_name] = true;\r",
+							"       tests[\"email \" + (i + 1) + \":\" +currentItem.email] = true;\r",
+							"       tests[\"status \" + (i + 1) + \":\" +currentItem.status] = true;\r",
+							"\r",
+							"        // Department details\r",
+							"        if (currentItem.department && currentItem.department.length > 0) {\r",
+							"            for (let j = 0; j < currentItem.department.length; j++) {\r",
+							"                const currentDepartment = currentItem.department[j];\r",
+							"                tests[\"Department ID \" + (j + 1) + \": \" + currentDepartment.id] = true;\r",
+							"                tests[\"Trash \" + (j + 1) + \": \" + currentDepartment.Trash] = true;\r",
+							"\r",
+							"                    if (currentDepartment.pivot) {\r",
+							"                    tests[\"Pivot - Staff ID \" + (j + 1) + \": \" + currentDepartment.pivot.staff_id] = true;\r",
+							"                    tests[\"Pivot - Department ID \" + (j + 1) + \": \" + currentDepartment.pivot.department_id] = true;\r",
+							"                }\r",
+							"                \r",
+							"            }\r",
+							"        } \r",
+							"    }\r",
+							"     \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Beraer Token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://dev-backend.viibrant.com/api/v1/department/1"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "collectionVariable",
+			"value": ""
+		}
+	]
+}
