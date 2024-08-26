@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "f55544ac-9aaf-47b3-a953-fefa1644bd8b",
+		"name": "Sentinal connect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30592326",
+		"_collection_link": "https://galactic-sunset-24707.postman.co/workspace/1427481e-929c-4270-89bc-b5489324008d/collection/30592326-f55544ac-9aaf-47b3-a953-fefa1644bd8b?action=share&source=collection_link&creator=30592326"
+	},
+	"item": [
+		{
+			"name": "echo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"if(iteration>0){\r",
+							"postman.setNextRequest(\"Data\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://postman-echo.com/get"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" tests[\"Status Code Check\"] = responseCode.code === 200;\r",
+							"tests[\"Has Token attribute\"] = responseBody.has(\"token\");\r",
+							" \r",
+							"//Get Token value\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"if(jsonData.token !== \"\")\r",
+							"{\r",
+							"    pm.environment.set(\"FetchedAuthorizationToken\",jsonData.accessToken);\r",
+							"    pm.environment.set(\"RandomNumber\", _.random(1,1000));\r",
+							"    tests[\"Token Fetched\"] = true;\r",
+							"}\r",
+							" \r",
+							"else\r",
+							"{\r",
+							"    tests[\"Token Fetched\"] = false;\r",
+							"    \r",
+							"}\r",
+							" \r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"// if (pm.environment.get(\"loginExecuted\") !== \"true\") {\r",
+							"//     pm.environment.set(\"loginExecuted\", \"true\");\r",
+							"// } else {\r",
+							"//     // Skip the login request\r",
+							"//     postman.setNextRequest(null);\r",
+							"// }\r",
+							"\r",
+							"// if (!pm.environment.has(\"login_successful\") || pm.environment.get(\"login_successful\") !== true) {\r",
+							"//   pm.sendRequest(); // Execute login request\r",
+							"//   pm.environment.set(\"login_successful\", true); // Set flag on success\r",
+							"// } else {\r",
+							"//   pm.setNextRequest(null);\r",
+							"// }\r",
+							"\r",
+							"// if (pm.globals.get(\"loginExecuted\") === true) {\r",
+							"//     postman.setNextRequest(null);\r",
+							"// }\r",
+							"\r",
+							"// if (!pm.environment.has(\"loginExecuted\") || !pm.environment.get(\"loginExecuted\")) {\r",
+							"//     // Proceed with login\r",
+							"// } else {\r",
+							"//     postman.setNextRequest(null); // Skip login\r",
+							"// }\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\":\"APIservice1\",\r\n    \"Password\":\"Symphonize8*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://0mw9ja1tdb.execute-api.eu-central-1.amazonaws.com/v1/token"
+			},
+			"response": []
+		},
+		{
+			"name": "Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//  verify the successful creation of a record\r",
+							"tests[\"creation of the record\"] = responseCode.code == 201;\r",
+							"\r",
+							"// Extract the information from the response JSON\r",
+							"var data = pm.response.json().entitlements[0].entitlement;\r",
+							"var product = pm.response.json().entitlements[0].entitlement.productKeys.productKey[0].item.itemProduct.product;\r",
+							"\r",
+							"// If the response code is 201, perform additional tests to verify the details of the created record\r",
+							"if (responseCode.code == 201) {\r",
+							"    tests[\"customer of the name\" + \":\" + data.customer.name] = true;\r",
+							"    tests[\"contact email Id is\" + \":\" + data.contact.emailId] = true; \r",
+							"    tests[\"product Id is\" + \":\" + product.nameVersion.name] = true; \r",
+							"    tests[\"product Version is\" + \":\" + product.nameVersion.version] = true;\r",
+							"} else {\r",
+							"    // If the response code is not 201, mark the tests as failed\r",
+							"    tests[\"Failed Tests\"] = false;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							" // Generate a random email address and set it as an environment variable\r",
+							"var randomEmail = `user_${Math.random().toString(36).substring(7)}@gmail.com`;\r",
+							"pm.environment.set('Email', randomEmail);\r",
+							" \r",
+							"var randomSuffix = Math.floor(Math.random() * 1000000000);\r",
+							"// Ensure the phone number has exactly 10 digits by adding a fixed digit at the beginning\r",
+							"var phoneNumber = \"7\" + randomSuffix;\r",
+							" \r",
+							"// Set the variable with the constructed phone number\r",
+							"pm.environment.set(\"PhoneNumber\", phoneNumber);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{FetchedAuthorizationToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{FetchedAuthorizationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "guid",
+						"value": "{{$guid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"EID\": \"\",\r\n    \"refId1\": \"32323\",\r\n    \"refId2\": \"53434\",\r\n    \"externalId\": \"\",\r\n    \"status\": \"commit\",\r\n    \"entitlementAsWhole\": \"false\",\r\n    \"userRegistration\": \"Optional\",\r\n    \"activationAllowed\": \"true\",\r\n    \"revocationAllowed\": \"true\",\r\n    \"sendNotification\": \"true\",\r\n    \"startDate\": \"2021-01-04\",\r\n    \"endDate\": \"2025-03-11\",\r\n    \"customer\": {\r\n        \"customerName\": \"{{Name}}\",\r\n        \"externalId\": \"9632\",\r\n        \"customerIdentifier\": \"5438\"\r\n    },\r\n    \"customerContact\": {\r\n        \"customerName\": \"Tim\",\r\n        \"contactName\": \"Timcon\",\r\n        \"contactEmail\": \"Timcon@test.com\",\r\n        \"externalId\": \"8658\",\r\n        \"refId1\": \"2323\",\r\n        \"refId2\": \"433232\"\r\n    },\r\n    \"channelPartner\": [\r\n        {\r\n            \"partnerIdentifier\": \"2354656\",\r\n            \"partnerName\": \"Grube\",\r\n            \"externalId\": \"53212132\",\r\n            \"refId1\": \"6543212\",\r\n            \"refId2\": \"7653212\"\r\n        }\r\n    ],\r\n    \"product\": [\r\n        {\r\n            \"startDate\": \"2021-01-04\",\r\n            \"endDate\": \"2023-12-25\",\r\n            \"externalId\": \"SL9020\",\r\n            \"totalQuantity\": \"43\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://0mw9ja1tdb.execute-api.eu-central-1.amazonaws.com/v1/entitlement"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "entitlementRecords",
+			"value": ""
+		}
+	]
+}
