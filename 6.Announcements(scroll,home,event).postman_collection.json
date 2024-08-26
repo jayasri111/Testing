@@ -1,0 +1,1688 @@
+{
+	"info": {
+		"_postman_id": "7784dec2-00bd-4986-bd56-49743855e2b9",
+		"name": "6.Announcements",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30592326"
+	},
+	"item": [
+		{
+			"name": "Scrolling Announcement",
+			"item": [
+				{
+					"name": "Creating Announcements",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code === 201;\r",
+									" \r",
+									" var jsonData = pm.response.json();\r",
+									" if(jsonData.status)\r",
+									" {\r",
+									"    tests[\"type\"+ jsonData.status.type] = true;\r",
+									"    tests[\"error\"+jsonData.status.error] =true;\r",
+									"    tests[\"message\"+jsonData.status.message] =true;\r",
+									"    tests[\"execution_time\"+jsonData.status.execution_time] =true;\r",
+									" }\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\"+jsonData.data.id] =true;\r",
+									"    tests[\"type\"+jsonData.data.type] = true;\r",
+									"    tests[\"title\"+jsonData.data.title] =true;\r",
+									"    tests[\"title\"+jsonData.data.description] =true;\r",
+									"    tests[\"title\"+jsonData.data.status] =true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"Scrolling\",\r\n  \"description\": \"Announcement Description\",\r\n  \"start_at\": \"2022-12-20 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-20 20:12 \",\r\n  \"status\": 1,\r\n  \"schedule_type\": \" always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Random title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code === 201;\r",
+									" \r",
+									" var jsonData = pm.response.json();\r",
+									" if(jsonData.status)\r",
+									" {\r",
+									"    tests[\"type\"+ jsonData.status.type] = true;\r",
+									"    tests[\"error\"+jsonData.status.error] =true;\r",
+									"    tests[\"message\"+jsonData.status.message] =true;\r",
+									"    tests[\"execution_time\"+jsonData.status.execution_time] =true;\r",
+									" }\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\"+jsonData.data.id] =true;\r",
+									"    tests[\"type\"+jsonData.data.type] = true;\r",
+									"    tests[\"title\"+jsonData.data.title] =true;\r",
+									"    tests[\"title\"+jsonData.data.description] =true;\r",
+									"    tests[\"title\"+jsonData.data.status] =true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"window = {};\r",
+									"\r",
+									"pm.sendRequest(\"https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js\", (error, response) => {\r",
+									"\r",
+									"console.log(response.code,\"response\",response);\r",
+									"    if (response.code !== 200) {\r",
+									"        pm.test('Could not load external library')\r",
+									"    }\r",
+									"     \r",
+									"    eval(response.text());\r",
+									"\r",
+									"    // This is where you can set the locale. See faker.js docs for all available locales.\r",
+									"    window.faker.locale = \"en\"; // You can set the locale based on your preference\r",
+									"\r",
+									"    // Generate a random title using faker\r",
+									"    const randomTitle = window.faker.lorem.words();\r",
+									"      \r",
+									"    pm.collectionVariables.set(\"randomTitle\", randomTitle);\r",
+									"});\r",
+									"  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \" {{randomTitle}}\",\r\n  \"description\": \"Announcement Description\",\r\n  \"start_at\": \"2022-12-20 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-20 20:12 \",\r\n  \"status\": 1,\r\n  \"schedule_type\": \" always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Random Descrption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code === 201;\r",
+									" \r",
+									" var jsonData = pm.response.json();\r",
+									" if(jsonData.status)\r",
+									" {\r",
+									"    tests[\"type\"+ jsonData.status.type] = true;\r",
+									"    tests[\"error\"+jsonData.status.error] =true;\r",
+									"    tests[\"message\"+jsonData.status.message] =true;\r",
+									"    tests[\"execution_time\"+jsonData.status.execution_time] =true;\r",
+									" }\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\"+jsonData.data.id] =true;\r",
+									"    tests[\"type\"+jsonData.data.type] = true;\r",
+									"    tests[\"title\"+jsonData.data.title] =true;\r",
+									"    tests[\"title\"+jsonData.data.description] =true;\r",
+									"    tests[\"title\"+jsonData.data.status] =true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"window = {};\r",
+									"\r",
+									"pm.sendRequest(\"https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js\", (error, response) => {\r",
+									"    if (error || response.code !== 200) {\r",
+									"        pm.test('Could not load external library')\r",
+									"    }\r",
+									"     \r",
+									"    eval(response.text());\r",
+									"\r",
+									"    // This is where you can set the locale. See faker.js docs for all available locales.\r",
+									"    window.faker.locale = \"en\"; // You can set the locale based on your preference\r",
+									"\r",
+									"    // Generate a random title using faker\r",
+									"    const randomTitle = window.faker.lorem.words();\r",
+									"      const randomDescription = window.faker.lorem.paragraph();\r",
+									"    \r",
+									"    pm.environment.set(\"randomTitle\", randomTitle);\r",
+									"    pm.environment.set(\"randomDescription\", randomDescription);\r",
+									"});\r",
+									"  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \" {{randomTitle}}\",\r\n  \"description\": \"{{randomDescription}}\",\r\n  \"start_at\": \"2022-12-20 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-20 20:12 \",\r\n  \"status\": 1,\r\n  \"schedule_type\": \" always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Token Creating Announcements",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"pm.test(\"Invalid Authorization\",function(){\r",
+									"pm.expect(jsonData.message).to.eql(\"You are not authorize\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}dsdfd"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"Scrolling title{{random_number}}\",\r\n  \"description\": \"Announceemnt{{random_number}}\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-20 20:12 \",\r\n  \"status\": 1,\r\n  \"schedule_type\": \" always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "empty title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code !==201;\r",
+									" \r",
+									"// Parse the HTML response\r",
+									"var htmlResponse = pm.response.text();\r",
+									" \r",
+									"// You can add more specific HTML validations as needed\r",
+									"// For example, you may want to check if a specific text is present in the HTML\r",
+									"tests[\"empty title\"] = htmlResponse.includes('The title field is required. in file /app/app/Api/V1/Requests/Request.');\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"type\": \"scrolling\",\r\n  \"title\": \" \",\r\n  \"description\": \"\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Empty Descrption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code ===201;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData.data)\r",
+									"{\r",
+									"    tests[\"descrption\"+jsonData.data.description] =true;\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"sfdsdfrsdafdg\",\r\n  \"description\": \"\",\r\n  \"start_at\": \"2022-12-20 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Random Start_At",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code==201;\r",
+									" \r",
+									"// Parse the HTML response\r",
+									"// var htmlResponse = pm.response.text();\r",
+									" \r",
+									"// // You can add more specific HTML validations as needed\r",
+									"// // For example, you may want to check if a specific text is present in the HTML\r",
+									"// tests[\"empty title\"] = htmlResponse.includes(' The start at does not match the format Y-m-d H:i. in file /app/app/Api/V1/Requests/Request.php on line 26');\r",
+									"\r",
+									"\r",
+									" \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Import the moment.js library\r",
+									"const moment = require('moment');\r",
+									"\r",
+									"// Generate a random year between 2020 and 2025\r",
+									"const randomYear = Math.floor(Math.random() * (2025 - 2020 + 1)) + 2020;\r",
+									"\r",
+									"// Generate a random month between 1 and 12\r",
+									"const randomMonth = Math.floor(Math.random() * 12) + 1;\r",
+									"\r",
+									"// Generate a random day between 1 and 28 (adjust as needed)\r",
+									"const randomDay = Math.floor(Math.random() * 28) + 1;\r",
+									"\r",
+									"// Generate a random date in \"YYYY-MM-DD HH:mm:ss\" format without milliseconds and 'Z'\r",
+									"const randomDate = moment(`${randomYear}-${randomMonth}-${randomDay} 12:00:00`, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm');\r",
+									"\r",
+									"// Set the global variable\r",
+									"pm.globals.set('randomDate', randomDate);\r",
+									"\r",
+									"// Log the generated date for verification\r",
+									"console.log(pm.globals.get('randomDate'));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"sfdsdfrsdafdg\",\r\n  \"description\": \"jkhgjghdjhd\",\r\n  \"start_at\": \"{{randomDate}} \",\r\n  \"end_at\": \"2022-12-10 20:12 \",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 6,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Empty/Invalid End_At",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code !==201;\r",
+									" \r",
+									"// Parse the HTML response\r",
+									"var htmlResponse = pm.response.text();\r",
+									" \r",
+									"// You can add more specific HTML validations as needed\r",
+									"// For example, you may want to check if a specific text is present in the HTML\r",
+									"tests[\"empty title\"] = htmlResponse.includes(' The end at does not match the format Y-m-d H:i. in file /app/app/Api/V1/Requests/Request.php on line 26');\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									" \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"fvgtrhjgjlkjnhf\",\r\n  \"description\": \"\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \" \",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 5,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Records",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"creation of record\"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if (jsonData.status) {\r",
+									"    tests[\"type\" + jsonData.status.type] = true;\r",
+									"    tests[\"message\" + jsonData.status.message] = true;\r",
+									"    tests[\"execution_time\" + jsonData.status.execution_time] = true;\r",
+									"    tests[\"total\" + jsonData.status.total] = true;\r",
+									"}\r",
+									"if (jsonData.data && jsonData.data.length > 0) {\r",
+									"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+									"        const currentdata = jsonData.data[i];\r",
+									"        tests[\"id\" + (i + 1) + currentdata.id] = true;\r",
+									"        tests[\"type\" + (i + 1) + currentdata.type] = true;\r",
+									"        tests[\"title\" + (i + 1) + currentdata.title] = true;\r",
+									"        tests[\"description\" + (i + 1) + currentdata.description] = true;\r",
+									"        tests[\"status\" + (i + 1) + currentdata.status] = true;\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://dev-backend.viibrant.com/api/v1/announcements/1/10?type=Scrolling&keyword=%20",
+							"protocol": "http",
+							"host": [
+								"dev-backend",
+								"viibrant",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"announcements",
+								"1",
+								"10"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Scrolling"
+								},
+								{
+									"key": "keyword",
+									"value": "%20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Inavalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"checking with Invalid ID \"] = responseCode.code === 404;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"messge\"+jsonData.status.message] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/876"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Valid Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"checking with Invalid ID \"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"messge\"+jsonData.status.message] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/732"
+					},
+					"response": []
+				},
+				{
+					"name": "Title Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" \r",
+									" "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"updating the scrolling Announcement data\"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"type\" + jsonData.status.type] =true;\r",
+									"    tests[\"message\" + jsonData.status.message] = true;\r",
+									"    tests[\"excution_time\" + jsonData.status.execution_time] = true;\r",
+									"}\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\" + jsonData.data.id] = true;\r",
+									"    tests[\"data type is \"+jsonData.data.type] =true;\r",
+									"    tests[\"title for scrolling is\" + jsonData.data.title] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"Srii{{title}}\",\r\n  \"description\": \"scrolling Announcement description{{description}}\",\r\n  \"order_position\": 1,\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/{{ID}}/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Descrption",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									" const moment = require('moment');\r",
+									"// Generate a random year between 2020 and 2025\r",
+									"const randomYear = Math.floor(Math.random() * (2025 - 2020 + 1)) + 2020;\r",
+									"\r",
+									"// Generate a random month between 1 and 12\r",
+									"const randomMonth = Math.floor(Math.random() * 12) + 1;\r",
+									"\r",
+									"// Generate a random day between 1 and 28 (adjust as needed)\r",
+									"const randomDay = Math.floor(Math.random() * 28) + 1;\r",
+									"\r",
+									"// Generate a random date in \"YYYY-MM-DD HH:mm\" format\r",
+									"const randomDate = moment(`${randomYear}-${randomMonth}-${randomDay}`, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm ');\r",
+									"\r",
+									"// Set the global variable\r",
+									"pm.globals.set('randomDate', randomDate);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"updating the scrolling Announcement data\"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"type\" + jsonData.status.type] =true;\r",
+									"    tests[\"message\" + jsonData.status.message] = true;\r",
+									"    tests[\"excution_time\" + jsonData.status.execution_time] = true;\r",
+									"}\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\" + jsonData.data.id] = true;\r",
+									"    tests[\"data type is \"+jsonData.data.type] =true;\r",
+									"    tests[\"title for scrolling is\" + jsonData.data.title] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"Srii{{random_number}}\",\r\n  \"description\": \"scrolling Announcement description{{random_number}}\",\r\n  \"order_position\": 1,\r\n  \"start_at\": \"{{randomDate}}\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/723/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/{{ID}}/delete"
+					},
+					"response": []
+				},
+				{
+					"name": "cdemo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJsdW1lbi1qd3QiLCJ1c2VyIjp7ImlkIjoxLCJlbWFpbCI6InN1cHBvcnRAdmlpYnJhbnQuY29tIiwidXNlcm5hbWUiOiJ2aWlicmFudGFkbWluIiwicHJlZmZpeCI6IihBZG1pbikiLCJzdWZmaXgiOm51bGwsImZpcnN0X25hbWUiOiJTZW5pb3IiLCJtaWRkbGVfbmFtZSI6Im1pZGRsZSIsImxhc3RfbmFtZSI6Ik1hc3RlciIsImJpcnRoZGF0ZSI6IjE5NzAtMTEtMjgiLCJwaG9uZSI6IjExMTExMTExMTEiLCJvbmxpbmUiOiJvZmZsaW5lIiwibG9naW5fbG9jYXRpb24iOiIxMjcuMC4xLjAiLCJsYXN0X2xvZ2luIjoiMjAyMy0xMS0xNiAwNzozNDozMCIsImRlcGFydG1lbnQiOm51bGwsInN1YmRlcGFydG1lbnQiOm51bGwsImRlc2lnbmF0aW9uIjpudWxsLCJiaW9ncmFwaHkiOiI8cCBzdHlsZT1cInRleHQtYWxpZ246IGxlZnQ7XCI-PHNwYW4gc3R5bGU9XCJjb2xvcjogIzAwMDAwMDsgYmFja2dyb3VuZC1jb2xvcjogIzM1OThkYjtcIj48c3Ryb25nPnNlbmlvcnBvcnRhbGNjYzxcL3N0cm9uZz48XC9zcGFuPjxcL3A-Iiwic3RhdHVzIjoiQSIsInNob3dfcHJvZmlsZV9yZXNfZGlyIjoiTiIsImhpZGVfZW1haWxfcmVzX2RpciI6Ik4iLCJyZWNpdmVfYWxsX3Jlc2lkZW50X2VtYWlsX25vdGlmeSI6IlkiLCJtZXNzYWdlX25vdGlmaWNhdGlvbl9wcml2YWN5IjoiZXZlcnlvbmUiLCJoaWRlX3Bob25lX3Jlc19kaXIiOiJOIiwic3RhZmZtYW5hZ2VyIjoiTiIsImNyZWF0ZWRfYXQiOiIyMDE5LTA1LTMwIDA5OjUzOjM4IiwidXBkYXRlZF9hdCI6IjIwMjMtMTEtMTYgMDc6MzQ6MzAiLCJkZWxldGVkX2F0IjpudWxsLCJyZW1lbWJlciI6IlkiLCJ1c2VyX3JvbGVzIjp7InVzZXJfaWQiOjEsInJvbGVfaWQiOjF9LCJ1c2VybWVkaWEiOltdLCJ1c2Vycm9sZXMiOnsidXNlcl9pZCI6MSwicm9sZV9pZCI6MX19LCJyb2xlIjoxLCJpYXQiOjE3MDAxMzA5MjgsImV4cCI6MjAxNTI4NjkyOH0.MQqH7re5ckTDeOAJ98E-b7AdwUs275z7inkcpm-zDExnjRO-OCsb3qswmk1E1wxo-L1XY0RvxRZwGcOew9GmOw"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n        \"content_type\": \"scroll-announcement\",\r\n        \"content_title\": \" \",\r\n        \"content_desc\": \" \",\r\n        \"created_by\": 1,\r\n        \"start_datetime\":\" \",\r\n        \"end_datetime\": null,\r\n        \"status\": \"A\",\r\n        \"order\": 1,\r\n        \"content_alias\": \"aasddf\",\r\n        \"updated_at\": \"2024-01-09 05:38:54\",\r\n        \"created_at\": \"2024-01-09 05:38:54\"\r\n    }\r\n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://cdemo.viibrant.com/beta-api/api/create/content"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HomepageAnnouncement",
+			"item": [
+				{
+					"name": "Homepage Announcements",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code === 201;\r",
+									" \r",
+									" var jsonData = pm.response.json();\r",
+									" if(jsonData.status)\r",
+									" {\r",
+									"    tests[\"type\"+ jsonData.status.type] = true;\r",
+									"    tests[\"error\"+jsonData.status.error] =true;\r",
+									"    tests[\"message\"+jsonData.status.message] =true;\r",
+									"    tests[\"execution_time\"+jsonData.status.execution_time] =true;\r",
+									" }\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\"+jsonData.data.id] =true;\r",
+									"    tests[\"type\"+jsonData.data.type] = true;\r",
+									"    tests[\"title\"+jsonData.data.title] =true;\r",
+									"    tests[\"title\"+jsonData.data.description] =true;\r",
+									"    tests[\"title\"+jsonData.data.status] =true;\r",
+									"}\r",
+									"var Announcementid = jsonData.data.id;\r",
+									"pm.environment.set(\"ID\",Announcementid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"type\": \"Homepage\",\r\n  \"title\": \"ashdsjdhskdh\",\r\n  \"description\": \"asdfffwglakdjwiurhiu\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}"
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "empty title for Homepage Announcement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code !==201;\r",
+									" \r",
+									"// Parse the HTML response\r",
+									"var htmlResponse = pm.response.text();\r",
+									" \r",
+									"// You can add more specific HTML validations as needed\r",
+									"// For example, you may want to check if a specific text is present in the HTML\r",
+									"tests[\"empty title\"] = htmlResponse.includes('The title field is required. in file /app/app/Api/V1/Requests/Request.');\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"type\": \"Homepage\",\r\n  \"title\": \" \",\r\n  \"description\": \"asdfffwglakdjwiurhiu\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Image for Descrption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code ===201;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData.data)\r",
+									"{\r",
+									"    tests[\"descrption\"+jsonData.data.description] =true;\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "'multipart/form-data'",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/jayasri/Documents/Practice/gallery/digital-calender (1).png"
+								}
+							]
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/image"
+					},
+					"response": []
+				},
+				{
+					"name": "Image for Descrption HomeAnnouncements Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code ===201;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData.data)\r",
+									"{\r",
+									"    tests[\"descrption\"+jsonData.data.description] =true;\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "'multipart/form-data'",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/C:/Users/jayasri/Documents/Practice/gallery/Directories-BG-Image.png"
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/image"
+					},
+					"response": []
+				},
+				{
+					"name": "Empty/Invalid Start_At Announcements",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code !==201;\r",
+									" \r",
+									"// Parse the HTML response\r",
+									"var htmlResponse = pm.response.text();\r",
+									" \r",
+									"// You can add more specific HTML validations as needed\r",
+									"// For example, you may want to check if a specific text is present in the HTML\r",
+									"tests[\"empty title\"] = htmlResponse.includes(' The start at does not match the format Y-m-d H:i. in file /app/app/Api/V1/Requests/Request.php on line 26');\r",
+									"\r",
+									"\r",
+									" \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"sfdsdfrsdafdg\",\r\n  \"description\": \"jkhgjghdjhd\",\r\n  \"start_at\": \" \",\r\n  \"end_at\": \" \",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Empty/Invalid End_At Announcements Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Creation of Record\"] =responseCode.code !==201;\r",
+									" \r",
+									"// Parse the HTML response\r",
+									"var htmlResponse = pm.response.text();\r",
+									" \r",
+									"// You can add more specific HTML validations as needed\r",
+									"// For example, you may want to check if a specific text is present in the HTML\r",
+									"tests[\"empty title\"] = htmlResponse.includes(' The end at does not match the format Y-m-d H:i. in file /app/app/Api/V1/Requests/Request.php on line 26');\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									" \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"fvgtrhjgjlkjnhf\",\r\n  \"description\": \"\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \" \",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 5,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Announcement Records",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"creation of record\"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if (jsonData.status) {\r",
+									"    tests[\"type\" + jsonData.status.type] = true;\r",
+									"    tests[\"message\" + jsonData.status.message] = true;\r",
+									"    tests[\"execution_time\" + jsonData.status.execution_time] = true;\r",
+									"    tests[\"total\" + jsonData.status.total] = true;\r",
+									"}\r",
+									"if (jsonData.data && jsonData.data.length > 0) {\r",
+									"    for (let i = 0; i < jsonData.data.length; i++) {\r",
+									"        const currentdata = jsonData.data[i];\r",
+									"        tests[\"id\" + (i + 1) + currentdata.id] = true;\r",
+									"        tests[\"type\" + (i + 1) + currentdata.type] = true;\r",
+									"        tests[\"title\" + (i + 1) + currentdata.title] = true;\r",
+									"        tests[\"description\" + (i + 1) + currentdata.description] = true;\r",
+									"        tests[\"status\" + (i + 1) + currentdata.status] = true;\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://dev-backend.viibrant.com/api/v1/announcements/1/10?type=Scrolling&keyword=%20",
+							"protocol": "http",
+							"host": [
+								"dev-backend",
+								"viibrant",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"announcements",
+								"1",
+								"10"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Scrolling"
+								},
+								{
+									"key": "keyword",
+									"value": "%20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Inavalid id Announcement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"checking with Invalid ID \"] = responseCode.code === 404;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"messge\"+jsonData.status.message] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/876"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By valid id Announcement Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"checking with Invalid ID \"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"messge\"+jsonData.status.message] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/{{ID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update scrolling Announcement of title",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"  \r",
+									" "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"updating the scrolling Announcement data\"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"type\" + jsonData.status.type] =true;\r",
+									"    tests[\"message\" + jsonData.status.message] = true;\r",
+									"    tests[\"excution_time\" + jsonData.status.execution_time] = true;\r",
+									"}\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\" + jsonData.data.id] = true;\r",
+									"    tests[\"data type is \"+jsonData.data.type] =true;\r",
+									"    tests[\"title for scrolling is\" + jsonData.data.title] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/C:/Users/jayasri/Documents/Practice/gallery/scrolling desc.PNG"
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/723/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "Update scrolling Announcement of descrption",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									" const moment = require('moment');\r",
+									"// Generate a random year between 2020 and 2025\r",
+									"const randomYear = Math.floor(Math.random() * (2025 - 2020 + 1)) + 2020;\r",
+									"\r",
+									"// Generate a random month between 1 and 12\r",
+									"const randomMonth = Math.floor(Math.random() * 12) + 1;\r",
+									"\r",
+									"// Generate a random day between 1 and 28 (adjust as needed)\r",
+									"const randomDay = Math.floor(Math.random() * 28) + 1;\r",
+									"\r",
+									"// Generate a random date in \"YYYY-MM-DD HH:mm\" format\r",
+									"const randomDate = moment(`${randomYear}-${randomMonth}-${randomDay}`, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm ');\r",
+									"\r",
+									"// Set the global variable\r",
+									"pm.globals.set('randomDate', randomDate);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"updating the scrolling Announcement data\"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if(jsonData.status)\r",
+									"{\r",
+									"    tests[\"type\" + jsonData.status.type] =true;\r",
+									"    tests[\"message\" + jsonData.status.message] = true;\r",
+									"    tests[\"excution_time\" + jsonData.status.execution_time] = true;\r",
+									"}\r",
+									"if(jsonData.data)\r",
+									"{\r",
+									"    tests[\"id\" + jsonData.data.id] = true;\r",
+									"    tests[\"data type is \"+jsonData.data.type] =true;\r",
+									"    tests[\"title for scrolling is\" + jsonData.data.title] = true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"scrolling\",\r\n  \"title\": \"Srii{{random_number}}\",\r\n  \"description\": \"scrolling Announcement description{{random_number}}\",\r\n  \"order_position\": 1,\r\n  \"start_at\": \"{{randomDate}}\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/723/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/715/delete"
+					},
+					"response": []
+				},
+				{
+					"name": "cdemo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJsdW1lbi1qd3QiLCJ1c2VyIjp7ImlkIjoxLCJlbWFpbCI6InN1cHBvcnRAdmlpYnJhbnQuY29tIiwidXNlcm5hbWUiOiJ2aWlicmFudGFkbWluIiwicHJlZmZpeCI6IihBZG1pbikiLCJzdWZmaXgiOm51bGwsImZpcnN0X25hbWUiOiJTZW5pb3IiLCJtaWRkbGVfbmFtZSI6Im1pZGRsZSIsImxhc3RfbmFtZSI6Ik1hc3RlciIsImJpcnRoZGF0ZSI6IjE5NzAtMTEtMjgiLCJwaG9uZSI6IjExMTExMTExMTEiLCJvbmxpbmUiOiJvZmZsaW5lIiwibG9naW5fbG9jYXRpb24iOiIxMjcuMC4xLjAiLCJsYXN0X2xvZ2luIjoiMjAyMy0xMS0xNiAwNzozNDozMCIsImRlcGFydG1lbnQiOm51bGwsInN1YmRlcGFydG1lbnQiOm51bGwsImRlc2lnbmF0aW9uIjpudWxsLCJiaW9ncmFwaHkiOiI8cCBzdHlsZT1cInRleHQtYWxpZ246IGxlZnQ7XCI-PHNwYW4gc3R5bGU9XCJjb2xvcjogIzAwMDAwMDsgYmFja2dyb3VuZC1jb2xvcjogIzM1OThkYjtcIj48c3Ryb25nPnNlbmlvcnBvcnRhbGNjYzxcL3N0cm9uZz48XC9zcGFuPjxcL3A-Iiwic3RhdHVzIjoiQSIsInNob3dfcHJvZmlsZV9yZXNfZGlyIjoiTiIsImhpZGVfZW1haWxfcmVzX2RpciI6Ik4iLCJyZWNpdmVfYWxsX3Jlc2lkZW50X2VtYWlsX25vdGlmeSI6IlkiLCJtZXNzYWdlX25vdGlmaWNhdGlvbl9wcml2YWN5IjoiZXZlcnlvbmUiLCJoaWRlX3Bob25lX3Jlc19kaXIiOiJOIiwic3RhZmZtYW5hZ2VyIjoiTiIsImNyZWF0ZWRfYXQiOiIyMDE5LTA1LTMwIDA5OjUzOjM4IiwidXBkYXRlZF9hdCI6IjIwMjMtMTEtMTYgMDc6MzQ6MzAiLCJkZWxldGVkX2F0IjpudWxsLCJyZW1lbWJlciI6IlkiLCJ1c2VyX3JvbGVzIjp7InVzZXJfaWQiOjEsInJvbGVfaWQiOjF9LCJ1c2VybWVkaWEiOltdLCJ1c2Vycm9sZXMiOnsidXNlcl9pZCI6MSwicm9sZV9pZCI6MX19LCJyb2xlIjoxLCJpYXQiOjE3MDAxMzA5MjgsImV4cCI6MjAxNTI4NjkyOH0.MQqH7re5ckTDeOAJ98E-b7AdwUs275z7inkcpm-zDExnjRO-OCsb3qswmk1E1wxo-L1XY0RvxRZwGcOew9GmOw"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n        \"content_type\": \"scroll-announcement\",\r\n        \"content_title\": \" \",\r\n        \"content_desc\": \" \",\r\n        \"created_by\": 1,\r\n        \"start_datetime\":\" \",\r\n        \"end_datetime\": null,\r\n        \"status\": \"A\",\r\n        \"order\": 1,\r\n        \"content_alias\": \"aasddf\",\r\n        \"updated_at\": \"2024-01-09 05:38:54\",\r\n        \"created_at\": \"2024-01-09 05:38:54\"\r\n    }\r\n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://cdemo.viibrant.com/beta-api/api/create/content"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; boundary=----WebKitFormBoundarykHppHbcO9pCcDHa5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/C:/Users/jayasri/Documents/Practice/gallery/Capture.PNG"
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/image"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HomePage Announcement",
+			"item": [
+				{
+					"name": "Homepage Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"Homepage\",\r\n  \"title\": \"Jaya\",\r\n  \"description\": \"announcement desctiption\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Homepage Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://dev-backend.viibrant.com/api/v1/announcements/1/-1?type=Homepage&keyword=%20",
+							"protocol": "http",
+							"host": [
+								"dev-backend",
+								"viibrant",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"announcements",
+								"1",
+								"-1"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Homepage"
+								},
+								{
+									"key": "keyword",
+									"value": "%20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Homepage Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"Homepage\",\r\n  \"title\": \"sri657\",\r\n  \"description\": \"announcement desctiption\",\r\n  \"order_position\": 1,\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/720/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/724"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/721/delete"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event Announcements",
+			"item": [
+				{
+					"name": "Homepage Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"Event\",\r\n  \"title\": \"Jaya\",\r\n  \"description\": \"announcement desctiption\",\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Homepage Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://dev-backend.viibrant.com/api/v1/announcements/1/-1?type=Event&keyword=%20",
+							"protocol": "http",
+							"host": [
+								"dev-backend",
+								"viibrant",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"announcements",
+								"1",
+								"-1"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Event"
+								},
+								{
+									"key": "keyword",
+									"value": "%20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Homepage Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \" Event\",\r\n  \"title\": \"sri657\",\r\n  \"description\": \"announcement desctiption\",\r\n  \"order_position\": 1,\r\n  \"start_at\": \"2022-12-10 20:12\",\r\n  \"end_at\": \"2022-12-20 20:12\",\r\n  \"published_on\": \"2022-12-10 20:12\",\r\n  \"status\": 1,\r\n  \"schedule_type\": \"always_on\",\r\n  \"image\": \"upload file url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/720/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/713"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Login Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://dev-backend.viibrant.com/api/v1/announcements/725/delete"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "randomTitle",
+			"value": ""
+		},
+		{
+			"key": "randomDescription",
+			"value": ""
+		}
+	]
+}
